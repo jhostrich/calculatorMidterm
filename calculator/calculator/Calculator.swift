@@ -645,15 +645,18 @@ class Calculator {
     // ----------------------
     
     func printCurrentValue() -> String {
-        let curr = self.retrieveCurrentValue()
+        let calc = self.retrieveLowestLevelCalc()
+        
+        // Determine whether we should display a decimal point
+        let decimalPoint = calc.fractions ? "." : ""
+        
         
         // If using exponential notation, print it out with it
         if self.exponential {
-            return "\(curr) E \(self.exponentialValue)"
+            return "\(calc.currentValue) E \(self.exponentialValue)"
         }
-            
-            // Otherwise, just print the value
+        // Otherwise, just print the value
         else {
-            return "\(curr)"        }
+            return "\(calc.currentValue)\(decimalPoint)"        }
     }
 }
