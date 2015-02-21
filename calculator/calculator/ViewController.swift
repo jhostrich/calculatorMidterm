@@ -85,6 +85,91 @@ class ViewController: UIViewController {
     @IBOutlet weak var randButton: UIButton!
 
     
+    // ----------
+    // Calculator
+    // ----------
+    
+    var calc = Calculator()
+    
+    // -----------------------------------------------------------
+
+    // --------------
+    // Adam's Changes
+    // --------------
+    
+    func initializeButtonFunctionality() {
+        self.acButton.addTarget(self, action: "pressAcButton", forControlEvents: .TouchUpInside)
+        // ------------------------
+        // Basic Calculator Buttons
+        // ------------------------
+        
+        // Functions
+        self.acButton: UIButton!
+        self.plusMinusButton: UIButton!
+        self.percentButton: UIButton!
+        self.divideButton: UIButton!
+        self.multiplyButton: UIButton!
+        self.subtractButton: UIButton!
+        self.addButton: UIButton!
+        self.equalsButton: UIButton!
+        self.decimalPointButton: UIButton!
+        
+        // Numbers
+        self.nineButton: UIButton!
+        self.eightButton: UIButton!
+        self.sevenButton: UIButton!
+        self.sixButton: UIButton!
+        self.fiveButton: UIButton!
+        self.fourButton: UIButton!
+        self.threeButton: UIButton!
+        self.twoButton: UIButton!
+        self.oneButton: UIButton!
+        self.zeroButton: UIButton!
+        
+        // -----------------------------
+        // Scientific Calculator Buttons
+        // -----------------------------
+        
+        // First Row
+        self.openParensButton: UIButton!
+        self.closeParensButton: UIButton!
+        self.mcButton: UIButton!
+        self.mPlusButton: UIButton!
+        self.mMinusButton: UIButton!
+        self.mRecallButton: UIButton!
+        // Second Row
+        self.secondButton: UIButton!
+        self.xSquaredButton: UIButton!
+        self.xCubedButton: UIButton!
+        self.xToTheYButton: UIButton!
+        self.eToTheXButton: UIButton!
+        self.tenToTheXButton: UIButton!
+        // Third Row
+        self.oneOverXButton: UIButton!
+        self.sqrtButton: UIButton!
+        self.cubertButton: UIButton!
+        self.xRootOfYButton: UIButton!
+        self.lnButton: UIButton!
+        self.log10Button: UIButton!
+        // Fourth Row
+        self.factorialButton: UIButton!
+        self.sinButton: UIButton!
+        self.cosButton: UIButton!
+        self.tanButton: UIButton!
+        self.eButton: UIButton!
+        self.eeButton: UIButton!
+        self.radButton: UIButton!
+        // Fifth Row
+        self.sinhCode: UIButton!
+        self.coshButton: UIButton!
+        self.tanhButton: UIButton!
+        self.πButton: UIButton!
+        self.randButton: UIButton!
+
+    }
+    
+    // -----------------------------------------------------------
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

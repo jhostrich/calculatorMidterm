@@ -55,6 +55,21 @@ class Calculator {
     // Array used to keep track of calculations due to order of operations
     var orderOfOperations: [Calculator] = []
     
+    // ----------------------------------------------------------------------
+    
+    // ----------------------
+    // Do the Singleton Dance
+    // ----------------------
+    
+    class var shared : Calculator {
+        
+        struct Static {
+            static let instance : Calculator = Calculator()
+        }
+        
+        return Static.instance
+    }
+
     
     // ----------------------------------------------------------------------
     
