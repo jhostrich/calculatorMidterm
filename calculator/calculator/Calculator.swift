@@ -150,6 +150,9 @@ class Calculator {
         if !self.exponential {
             self.retrieveLowestLevelCalc().fractions = true
         }
+        
+        // Post Notification to display the current value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
     }
     
     // Press radians
@@ -164,6 +167,9 @@ class Calculator {
             self.exponential = true
             self.exponentialValue = 0
         }
+        
+        // Post Notification to display the current value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
     }
     
     // Press Number
@@ -189,6 +195,9 @@ class Calculator {
                 calc.currentValue = calc.currentValue * 10.0 + Double(number)
             }
         }
+        
+        // Post Notification to display the current value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
     }
     
     // ----------------------------------------------------------------------
@@ -310,6 +319,14 @@ class Calculator {
         else {
             calc.currentValue = value
         }
+        
+        // Post notification to display the appropriate value
+        if calc.unaryPreviousValue {
+            NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
+        }
+        else {
+            NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
+        }
     }
     
     // Perform normal calculations
@@ -345,6 +362,10 @@ class Calculator {
         // We want to store the nextOperation and reset the currentValue every time
         currentCalc.currentValue = 0
         currentCalc.fractions = false
+        
+        // Post Notification to display the previous value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
+
     }
     
     // Perform the stored calculation
@@ -398,6 +419,10 @@ class Calculator {
             println("\(currentCalc.nextOperation) is not a valid operation")
         }
         
+        // Post Notification to display the previous value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
+
+        
         return currentCalc.previousValue
     }
     
@@ -428,6 +453,10 @@ class Calculator {
             // Set the current value of the superCalc to the final value of currentCalc
             superCalc.currentValue = currentCalc.performStoredCalculation()
         }
+        
+        // Post Notification to display the current value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
+
     }
     
     // ----------------------------------------------------------------------
