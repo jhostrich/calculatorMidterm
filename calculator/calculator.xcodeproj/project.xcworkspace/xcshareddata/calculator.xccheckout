@@ -10,31 +10,31 @@
 	<string>calculator</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>10A52EA4FBADB6C746B5260032017E5923CCC696</key>
-		<string>https://github.com/jhostrich/MOB-DC-01.git</string>
+		<key>DD43B71E0DC36C9B88CFBF8CEE5C509C13E93ED5</key>
+		<string>https://github.com/jhostrich/calculatorMidterm.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Homework/Midterm/calculator/calculator.xcodeproj</string>
+	<string>calculator/calculator.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>10A52EA4FBADB6C746B5260032017E5923CCC696</key>
-		<string>../../../../..</string>
+		<key>DD43B71E0DC36C9B88CFBF8CEE5C509C13E93ED5</key>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/jhostrich/MOB-DC-01.git</string>
+	<string>https://github.com/jhostrich/calculatorMidterm.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>10A52EA4FBADB6C746B5260032017E5923CCC696</string>
+	<string>DD43B71E0DC36C9B88CFBF8CEE5C509C13E93ED5</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>10A52EA4FBADB6C746B5260032017E5923CCC696</string>
+			<string>DD43B71E0DC36C9B88CFBF8CEE5C509C13E93ED5</string>
 			<key>IDESourceControlWCCName</key>
-			<string>MOB-DC-01</string>
+			<string>calculatorMidterm</string>
 		</dict>
 	</array>
 </dict>
