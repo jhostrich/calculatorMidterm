@@ -1118,6 +1118,7 @@
                         <outlet property="percentButton" destination="0cg-JA-tjj" id="uiX-wU-aLS"/>
                         <outlet property="plusMinusButton" destination="m4d-eC-yCS" id="qmn-QR-TPc"/>
                         <outlet property="radButton" destination="D4D-Lt-MXZ" id="jsB-kk-Gm5"/>
+                        <outlet property="randButton" destination="dQo-u9-PYc" id="vjU-tg-I7P"/>
                         <outlet property="secondButton" destination="njv-Xy-CAm" id="n52-a0-zKf"/>
                         <outlet property="sevenButton" destination="F1P-63-fuF" id="olV-O6-gqi"/>
                         <outlet property="sinButton" destination="BUG-q2-EYz" id="9Bb-dD-SuU"/>
@@ -1135,6 +1136,7 @@
                         <outlet property="xSquaredButton" destination="xDh-hv-R6Z" id="bYc-26-VXY"/>
                         <outlet property="xToTheYButton" destination="lf9-S0-s0E" id="q4N-bf-DOi"/>
                         <outlet property="zeroButton" destination="FYa-Y4-fqW" id="CCB-1r-JYs"/>
+                        <outlet property="πButton" destination="SHB-bZ-EC9" id="2MJ-x3-pKY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

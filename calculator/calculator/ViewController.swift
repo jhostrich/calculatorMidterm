@@ -98,81 +98,181 @@ class ViewController: UIViewController {
     // --------------
     
     func initializeButtonFunctionality() {
-        self.acButton.addTarget(self, action: "pressAcButton", forControlEvents: .TouchUpInside)
         // ------------------------
         // Basic Calculator Buttons
         // ------------------------
         
         // Functions
-        self.acButton: UIButton!
-        self.plusMinusButton: UIButton!
-        self.percentButton: UIButton!
-        self.divideButton: UIButton!
-        self.multiplyButton: UIButton!
-        self.subtractButton: UIButton!
-        self.addButton: UIButton!
-        self.equalsButton: UIButton!
-        self.decimalPointButton: UIButton!
+        self.acButton.addTarget           (self, action: "pressAcButton",           forControlEvents: .TouchUpInside)
+        self.plusMinusButton.addTarget    (self, action: "pressPlusMinusButton",    forControlEvents: .TouchUpInside)
+        self.percentButton.addTarget      (self, action: "pressPercentButton",      forControlEvents: .TouchUpInside)
+        self.divideButton.addTarget       (self, action: "pressDivideButton",       forControlEvents: .TouchUpInside)
+        self.multiplyButton.addTarget     (self, action: "pressMultiplyButton",     forControlEvents: .TouchUpInside)
+        self.subtractButton.addTarget     (self, action: "pressSubtractButton",     forControlEvents: .TouchUpInside)
+        self.addButton.addTarget          (self, action: "pressAddButton",          forControlEvents: .TouchUpInside)
+        self.equalsButton.addTarget       (self, action: "pressEqualsButton",       forControlEvents: .TouchUpInside)
+        self.decimalPointButton.addTarget (self, action: "pressDecimalPointButton", forControlEvents: .TouchUpInside)
         
         // Numbers
-        self.nineButton: UIButton!
-        self.eightButton: UIButton!
-        self.sevenButton: UIButton!
-        self.sixButton: UIButton!
-        self.fiveButton: UIButton!
-        self.fourButton: UIButton!
-        self.threeButton: UIButton!
-        self.twoButton: UIButton!
-        self.oneButton: UIButton!
-        self.zeroButton: UIButton!
+        self.nineButton.addTarget         (self, action: "pressNineButton",         forControlEvents: .TouchUpInside)
+        self.eightButton.addTarget        (self, action: "pressEightButton",        forControlEvents: .TouchUpInside)
+        self.sevenButton.addTarget        (self, action: "pressSevenButton",        forControlEvents: .TouchUpInside)
+        self.sixButton.addTarget          (self, action: "pressSixButton",          forControlEvents: .TouchUpInside)
+        self.fiveButton.addTarget         (self, action: "pressFiveButton",         forControlEvents: .TouchUpInside)
+        self.fourButton.addTarget         (self, action: "pressFourButton",         forControlEvents: .TouchUpInside)
+        self.threeButton.addTarget        (self, action: "pressThreeButton",        forControlEvents: .TouchUpInside)
+        self.twoButton.addTarget          (self, action: "pressTwoButton",          forControlEvents: .TouchUpInside)
+        self.oneButton.addTarget          (self, action: "pressOneButton",          forControlEvents: .TouchUpInside)
+        self.zeroButton.addTarget         (self, action: "pressZeroButton",         forControlEvents: .TouchUpInside)
         
         // -----------------------------
         // Scientific Calculator Buttons
         // -----------------------------
         
         // First Row
-        self.openParensButton: UIButton!
-        self.closeParensButton: UIButton!
-        self.mcButton: UIButton!
-        self.mPlusButton: UIButton!
-        self.mMinusButton: UIButton!
-        self.mRecallButton: UIButton!
+        self.openParensButton.addTarget   (self, action: "pressOpenParensButton",   forControlEvents: .TouchUpInside)
+        self.closeParensButton.addTarget  (self, action: "pressCloseParensButton",  forControlEvents: .TouchUpInside)
+        self.mcButton.addTarget           (self, action: "pressMcButton",           forControlEvents: .TouchUpInside)
+        self.mPlusButton.addTarget        (self, action: "pressMPlusButton",        forControlEvents: .TouchUpInside)
+        self.mMinusButton.addTarget       (self, action: "pressMMinusButton",       forControlEvents: .TouchUpInside)
+        self.mRecallButton.addTarget      (self, action: "pressMRecallButton",      forControlEvents: .TouchUpInside)
         // Second Row
-        self.secondButton: UIButton!
-        self.xSquaredButton: UIButton!
-        self.xCubedButton: UIButton!
-        self.xToTheYButton: UIButton!
-        self.eToTheXButton: UIButton!
-        self.tenToTheXButton: UIButton!
+        self.secondButton.addTarget       (self, action: "pressSecondButton",       forControlEvents: .TouchUpInside)
+        self.xSquaredButton.addTarget     (self, action: "pressXSquaredButton",     forControlEvents: .TouchUpInside)
+        self.xCubedButton.addTarget       (self, action: "pressXCubedButton",       forControlEvents: .TouchUpInside)
+        self.xToTheYButton.addTarget      (self, action: "pressXToTheYButton",      forControlEvents: .TouchUpInside)
+        self.eToTheXButton.addTarget      (self, action: "pressEToTheXButton",      forControlEvents: .TouchUpInside)
+        self.tenToTheXButton.addTarget    (self, action: "pressTenToTheXButton",    forControlEvents: .TouchUpInside)
         // Third Row
-        self.oneOverXButton: UIButton!
-        self.sqrtButton: UIButton!
-        self.cubertButton: UIButton!
-        self.xRootOfYButton: UIButton!
-        self.lnButton: UIButton!
-        self.log10Button: UIButton!
+        self.oneOverXButton.addTarget     (self, action: "pressOneOverXButton",     forControlEvents: .TouchUpInside)
+        self.sqrtButton.addTarget         (self, action: "pressSqrtButton",         forControlEvents: .TouchUpInside)
+        self.cubertButton.addTarget       (self, action: "pressCubertButton",       forControlEvents: .TouchUpInside)
+        self.xRootOfYButton.addTarget     (self, action: "pressXRootOfYButton",     forControlEvents: .TouchUpInside)
+        self.lnButton.addTarget           (self, action: "pressLnButton",           forControlEvents: .TouchUpInside)
+        self.log10Button.addTarget        (self, action: "pressLog10Button",        forControlEvents: .TouchUpInside)
         // Fourth Row
-        self.factorialButton: UIButton!
-        self.sinButton: UIButton!
-        self.cosButton: UIButton!
-        self.tanButton: UIButton!
-        self.eButton: UIButton!
-        self.eeButton: UIButton!
-        self.radButton: UIButton!
+        self.factorialButton.addTarget    (self, action: "pressFactorialButton",    forControlEvents: .TouchUpInside)
+        self.sinButton.addTarget          (self, action: "pressSinButton",          forControlEvents: .TouchUpInside)
+        self.cosButton.addTarget          (self, action: "pressCosButton",          forControlEvents: .TouchUpInside)
+        self.tanButton.addTarget          (self, action: "pressTanButton",          forControlEvents: .TouchUpInside)
+        self.eButton.addTarget            (self, action: "pressEButton",            forControlEvents: .TouchUpInside)
+        self.eeButton.addTarget           (self, action: "pressEeButton",           forControlEvents: .TouchUpInside)
+        self.radButton.addTarget          (self, action: "pressRadButton",          forControlEvents: .TouchUpInside)
         // Fifth Row
-        self.sinhCode: UIButton!
-        self.coshButton: UIButton!
-        self.tanhButton: UIButton!
-        self.πButton: UIButton!
-        self.randButton: UIButton!
-
+        self.sinhCode.addTarget           (self, action: "pressSinhCode",           forControlEvents: .TouchUpInside)
+        self.coshButton.addTarget         (self, action: "pressCoshButton",         forControlEvents: .TouchUpInside)
+        self.tanhButton.addTarget         (self, action: "pressTanhButton",         forControlEvents: .TouchUpInside)
+        self.πButton.addTarget            (self, action: "pressπButton",            forControlEvents: .TouchUpInside)
+        self.randButton.addTarget         (self, action: "pressRandButton",         forControlEvents: .TouchUpInside)
     }
     
+    // ------------------------
+    // Basic Calculator Buttons
+    // ------------------------
+    
+    // Functions
+    func pressAcButton()           { Calculator.shared.reset() }
+    func pressPlusMinusButton()    { Calculator.shared.performUnaryOperation("+/-") }
+    func pressPercentButton()      { Calculator.shared.performUnaryOperation("%")   }
+    func pressDivideButton()       { Calculator.shared.performNewCalculation("/")   }
+    func pressMultiplyButton()     { Calculator.shared.performNewCalculation("*")   }
+    func pressSubtractButton()     { Calculator.shared.performNewCalculation("-")   }
+    func pressAddButton()          { Calculator.shared.performNewCalculation("+")   }
+    func pressEqualsButton()       { Calculator.shared.finishCalculation() }
+    func pressDecimalPointButton() { Calculator.shared.pressDecimalPoint() }
+    
+    // Numbers
+    func pressNineButton()         { Calculator.shared.pressNumber(9) }
+    func pressEightButton()        { Calculator.shared.pressNumber(8) }
+    func pressSevenButton()        { Calculator.shared.pressNumber(7) }
+    func pressSixButton()          { Calculator.shared.pressNumber(6) }
+    func pressFiveButton()         { Calculator.shared.pressNumber(5) }
+    func pressFourButton()         { Calculator.shared.pressNumber(4) }
+    func pressThreeButton()        { Calculator.shared.pressNumber(3) }
+    func pressTwoButton()          { Calculator.shared.pressNumber(2) }
+    func pressOneButton()          { Calculator.shared.pressNumber(1) }
+    func pressZeroButton()         { Calculator.shared.pressNumber(0) }
+    
+    // -----------------------------
+    // Scientific Calculator Buttons
+    // -----------------------------
+    
+    // First Row
+    func pressOpenParensButton()   { Calculator.shared.openParens()     }
+    func pressCloseParensButton()  { Calculator.shared.closeParens()    }
+    func pressMcButton()           { Calculator.shared.memoryClear()    }
+    func pressMPlusButton()        { Calculator.shared.memoryAdd()      }
+    func pressMMinusButton()       { Calculator.shared.memorySubtract() }
+    func pressMRecallButton()      { Calculator.shared.memoryRecall()   }
+    
+    // Second Row
+    // TODO: This functionality is all in the view controller, move it there
+    //func pressSecondButton() {  }
+    
+    func pressXSquaredButton()     { Calculator.shared.performUnaryOperation("x^2")  }
+    func pressXCubedButton()       { Calculator.shared.performUnaryOperation("x^3")  }
+    func pressXToTheYButton()      { Calculator.shared.performNewCalculation("x^y")  }
+    func pressEToTheXButton()      { Calculator.shared.performUnaryOperation("e^x")  }
+    func pressTenToTheXButton()    { Calculator.shared.performUnaryOperation("10^x") }
+    
+    // Third Row
+    func pressOneOverXButton()     { Calculator.shared.performUnaryOperation("1/x")         }
+    func pressSqrtButton()         { Calculator.shared.performUnaryOperation("sqrt")        }
+    func pressCubertButton()       { Calculator.shared.performUnaryOperation("cubert")      }
+    func pressXRootOfYButton()     { Calculator.shared.performNewCalculation("x_root_of_y") }
+    func pressLnButton()           { Calculator.shared.performUnaryOperation("ln")          }
+    func pressLog10Button()        { Calculator.shared.performUnaryOperation("log10")       }
+    
+    // Fourth Row
+    func pressFactorialButton()    { Calculator.shared.performUnaryOperation("x!")  }
+    func pressSinButton()          { Calculator.shared.performUnaryOperation("sin") }
+    func pressCosButton()          { Calculator.shared.performUnaryOperation("cos") }
+    func pressTanButton()          { Calculator.shared.performUnaryOperation("tan") }
+    func pressEButton()            { Calculator.shared.performUnaryOperation("e")   }
+    func pressEeButton()           { Calculator.shared.pressEE()  }
+    func pressRadButton()          { Calculator.shared.pressRad() }
+    
+    // Fifth Row
+    func pressSinhCode()           { Calculator.shared.performUnaryOperation("sinh") }
+    func pressCoshButton()         { Calculator.shared.performUnaryOperation("cosh") }
+    func pressTanhButton()         { Calculator.shared.performUnaryOperation("tanh") }
+    func pressπButton()            { Calculator.shared.performUnaryOperation("π")    }
+    func pressRandButton()         { Calculator.shared.performUnaryOperation("rand") }
+    
+    
+    // -----------------------------------------------------------
+    
+    // ----------------
+    // Display in Label
+    // ----------------
+    
+    // Previous Value
+    func displayPreviousValue(notification: NSNotification) {
+        self.displayLabel.text = Calculator.shared.printPreviousValue(32)
+    }
+    
+    // Current Value
+    func displayCurrentValue(notification: NSNotification) {
+        self.displayLabel.text = Calculator.shared.printCurrentValue(32)
+    }
+    
+    // Error Out
+    func displayError(notification: NSNotification) {
+        self.displayLabel.text = "Error"
+    }
+
     // -----------------------------------------------------------
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.initializeButtonFunctionality()
+        
+        // Setup observers for notifications to display 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayPreviousValue:", name: "displayPreviousValue", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayCurrentValue:", name: "displayCurrentValue", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayError:", name: "displayError", object: nil)
     }
 }
 

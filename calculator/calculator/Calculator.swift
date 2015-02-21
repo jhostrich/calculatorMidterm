@@ -44,6 +44,9 @@ class Calculator {
     var fractions: Bool = false
     var fractionLevel: Double = 0.1
     
+    // Tracks when the equals button has just been pressed
+    var equalsPressed: Bool = false
+    
     // Handle memory operations
     var memoryValue: Double = 0
     
@@ -149,6 +152,9 @@ class Calculator {
         // Ignore if currently creating an exponential number
         if !self.exponential {
             self.retrieveLowestLevelCalc().fractions = true
+            
+            // Make sure new unary operations are performed on the current vaue
+            self.retrieveLowestLevelCalc().unaryPreviousValue = false
         }
         
         // Post Notification to display the current value
@@ -166,6 +172,9 @@ class Calculator {
         if !self.exponential {
             self.exponential = true
             self.exponentialValue = 0
+            
+            // Make sure new unary operations are performed on the current vaue
+            self.retrieveLowestLevelCalc().unaryPreviousValue = false
         }
         
         // Post Notification to display the current value
@@ -174,6 +183,7 @@ class Calculator {
     
     // Press Number
     func pressNumber(number: Int) {
+        println("Pressing number \(number)")
         // Grab the lowest level calculator
         var calc = self.retrieveLowestLevelCalc()
         
@@ -196,6 +206,10 @@ class Calculator {
             }
         }
         
+        // Make sure new unary operations are performed on the current vaue
+        calc.unaryPreviousValue = false
+        
+        
         // Post Notification to display the current value
         NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
     }
@@ -216,6 +230,10 @@ class Calculator {
         
         // Retrieve the previousValue or currentValue based on unaryPreviousValue
         var value = calc.unaryPreviousValue ? calc.previousValue : calc.currentValue
+        
+//        println("Previous value: \(calc.previousValue)")
+//        println("Current value: \(calc.currentValue)")
+//        println("Performing unary operation \(operation) on value \(value)")
         
         switch operation {
         case "+/-":
@@ -322,9 +340,11 @@ class Calculator {
         
         // Post notification to display the appropriate value
         if calc.unaryPreviousValue {
+            println("Displaying previous value")
             NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
         }
         else {
+            println("Displaying current value")
             NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
         }
     }
@@ -343,8 +363,12 @@ class Calculator {
             currentCalc.previousValue = currentCalc.currentValue
             currentCalc.nextOperation = operation
         }
-            
-            // If the operation is a higher priority than nextOperation, create a new calculator to start it
+        // If equals was just pressed, just queue up the next calculation
+        else if self.equalsPressed {
+            currentCalc.nextOperation = operation
+            self.equalsPressed = false
+        }
+        // If the operation is a higher priority than nextOperation, create a new calculator to start it
         else if self.operatorPriority[operation] > self.operatorPriority[currentOrderCalc.nextOperation] {
             currentCalc.orderOfOperations.append(Calculator())
             currentCalc.orderOfOperations.last?.previousValue = currentOrderCalc.currentValue
@@ -362,6 +386,7 @@ class Calculator {
         // We want to store the nextOperation and reset the currentValue every time
         currentCalc.currentValue = 0
         currentCalc.fractions = false
+        currentCalc.fractionLevel = 0.1
         
         // Post Notification to display the previous value
         NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
@@ -555,6 +580,9 @@ class Calculator {
         // Mark that any future unary operations should be performed on previousValue
         self.unaryPreviousValue = true
         
+        // Mark that the equals button has been pressed
+        self.equalsPressed = true
+        
         // Perform the stored top level calculation
         return self.performStoredCalculation()
     }
@@ -563,11 +591,15 @@ class Calculator {
     func reset() {
         self.firstCalculation = true
         self.fractions = false
+        self.fractionLevel = 0.1
         self.exponential = false
         self.previousValue = 0
         self.currentValue = 0
         self.nextOperation = ""
         self.parensCalculations.removeAll(keepCapacity: false)
+        
+        // Post Notification to display the current value
+        NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
     }
     
     // If there is only a currentValue, set previousValue to it
@@ -635,28 +667,77 @@ class Calculator {
     //       Disable all buttons until everything is cleared
     
     func errorOut() {
-        NSNotificationCenter.defaultCenter().postNotificationName("calculationError", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("displayError", object: nil)
     }
     
     // ----------------------------------------------------------------------
     
-    // ----------------------
-    // Print the currentValue
-    // ----------------------
+    // ------------
+    // Print Values
+    // ------------
     
-    func printCurrentValue() -> String {
+    // Previous Value
+    func printPreviousValue(numChars: Int) -> String {
+        return self.printValue(self.previousValue, numChars: numChars)
+    }
+    
+    func printValue(printValue: Double, numChars: Int) -> String {
+        
+        // Display value
+        var value: String
+        
+        // Only display the integer unless we have a fraction portion
+        if (printValue % 1) > 0.0 {
+            value = "\(printValue)"
+        }
+        else {
+            value = "\(Int(printValue))"
+        }
+        
+        return self.truncate(value, numChars: numChars)
+
+    }
+    
+    // Current Value
+    func printCurrentValue(numChars: Int) -> String {
         let calc = self.retrieveLowestLevelCalc()
         
         // Determine whether we should display a decimal point
         let decimalPoint = calc.fractions ? "." : ""
         
+        // Display value
+        var value: String
+        
+        // Final output
+        
+        
+        // Only display the integer unless we have a fraction portion
+        if (calc.currentValue % 1) > 0.0 {
+            value = "\(calc.currentValue)"
+        }
+        else {
+            value = "\(Int(calc.currentValue))\(decimalPoint)"
+        }
+        
         
         // If using exponential notation, print it out with it
         if self.exponential {
-            return "\(calc.currentValue) E \(self.exponentialValue)"
+            // Do some special magic for truncating exponential values
+            return "\(value) E \(self.exponentialValue)"
         }
         // Otherwise, just print the value
         else {
-            return "\(calc.currentValue)\(decimalPoint)"        }
+            // Only display the integer unless we have a fraction portion
+            return self.truncate(value, numChars: numChars)
+        }
+    }
+    
+    // Truncate output strings to fit label
+    func truncate(value: String, numChars: Int) -> String {
+        // Determine if we're dealing with an integer
+//        if contains(value, ".") && value[value.startIndex...value.] {
+        
+//        }
+        return value
     }
 }
