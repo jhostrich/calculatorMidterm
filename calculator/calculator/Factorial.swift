@@ -8,11 +8,12 @@
 
 import Foundation
 
-func factorial(number: Int, prev: Int=1) -> Int {
+func factorial(number: Double, prev: Double=1) -> Double {
     if number == 0 {
-        return 1
+        return 1.0
     }
     else if number == 1 {
+        println("Hey now")
         return prev
     }
     else {

@@ -170,7 +170,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0    " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kcv-RT-4rX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0    " textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="Kcv-RT-4rX">
                                 <rect key="frame" x="20" y="0.0" width="560" height="150"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="72"/>
@@ -1118,6 +1118,7 @@
                         <outlet property="percentButton" destination="0cg-JA-tjj" id="uiX-wU-aLS"/>
                         <outlet property="plusMinusButton" destination="m4d-eC-yCS" id="qmn-QR-TPc"/>
                         <outlet property="radButton" destination="D4D-Lt-MXZ" id="jsB-kk-Gm5"/>
+                        <outlet property="randButton" destination="dQo-u9-PYc" id="vjU-tg-I7P"/>
                         <outlet property="secondButton" destination="njv-Xy-CAm" id="n52-a0-zKf"/>
                         <outlet property="sevenButton" destination="F1P-63-fuF" id="olV-O6-gqi"/>
                         <outlet property="sinButton" destination="BUG-q2-EYz" id="9Bb-dD-SuU"/>
@@ -1135,6 +1136,7 @@
                         <outlet property="xSquaredButton" destination="xDh-hv-R6Z" id="bYc-26-VXY"/>
                         <outlet property="xToTheYButton" destination="lf9-S0-s0E" id="q4N-bf-DOi"/>
                         <outlet property="zeroButton" destination="FYa-Y4-fqW" id="CCB-1r-JYs"/>
+                        <outlet property="πButton" destination="SHB-bZ-EC9" id="2MJ-x3-pKY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
