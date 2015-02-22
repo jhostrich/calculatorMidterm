@@ -76,8 +76,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var tanButton: UIButton!
     @IBOutlet weak var eButton: UIButton!
     @IBOutlet weak var eeButton: UIButton!
-    @IBOutlet weak var radButton: UIButton!
     // Fifth Row
+    @IBOutlet weak var radButton: UIButton!
     @IBOutlet weak var sinhCode: UIButton!
     @IBOutlet weak var coshButton: UIButton!
     @IBOutlet weak var tanhButton: UIButton!
@@ -206,9 +206,7 @@ class ViewController: UIViewController {
     func pressMRecallButton()      { Calculator.shared.memoryRecall()   }
     
     // Second Row
-    // TODO: This functionality is all in the view controller, move it there
-    //func pressSecondButton() {  }
-    
+    func pressSecondButton() {  }    
     func pressXSquaredButton()     { Calculator.shared.performUnaryOperation("x^2")  }
     func pressXCubedButton()       { Calculator.shared.performUnaryOperation("x^3")  }
     func pressXToTheYButton()      { Calculator.shared.performNewCalculation("x^y")  }
@@ -248,19 +246,48 @@ class ViewController: UIViewController {
     
     // Previous Value
     func displayPreviousValue(notification: NSNotification) {
-        self.displayLabel.text = Calculator.shared.printPreviousValue(32)
+        self.displayLabel.text = Calculator.shared.printPreviousValue()
     }
     
     // Current Value
     func displayCurrentValue(notification: NSNotification) {
-        self.displayLabel.text = Calculator.shared.printCurrentValue(32)
+        self.displayLabel.text = Calculator.shared.printCurrentValue()
+    }
+    
+    // Memory Value
+    func displayMemoryValue(notification: NSNotification) {
+        self.displayLabel.text = Calculator.shared.printMemoryValue()
+    }
+    
+    // Display Infinity
+    func displayInfinity(notification: NSNotification) {
+        self.displayLabel.text = "Infinity"
+    }
+    
+    // Display Negative Infinity
+    func displayNegativeInfinity(notification: NSNotification) {
+        self.displayLabel.text = "-Infinity"
     }
     
     // Error Out
     func displayError(notification: NSNotification) {
         self.displayLabel.text = "Error"
     }
+    
+    // -----------------------------------------------------------
 
+    // ---------------
+    // Degrees/Radians
+    // ---------------
+    
+    func degreesToRadians(notification: NSNotification) {
+        self.radButton.setTitle("Deg", forState: .Normal)
+    }
+    
+    func radiansToDegrees(notification: NSNotification) {
+        self.radButton.setTitle("Rad", forState: .Normal)
+    }
+    
     // -----------------------------------------------------------
     
 
@@ -269,10 +296,38 @@ class ViewController: UIViewController {
         
         self.initializeButtonFunctionality()
         
-        // Setup observers for notifications to display 
+        
+        // -----------------------
+        // Setup Display Observers
+        // -----------------------
+        
+        // Previous Value
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayPreviousValue:", name: "displayPreviousValue", object: nil)
+        
+        // Current Value
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayCurrentValue:", name: "displayCurrentValue", object: nil)
+        
+        // Memory Value
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayMemoryValue:", name: "displayMemoryValue", object: nil)
+        
+        // Display Infinity
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayInfinity:", name: "displayInfinity", object: nil)
+
+        // Display Negative Infinity
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayNegativeInfinity:", name: "displayNegativeInfinity", object: nil)
+        
+        // Error
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "displayError:", name: "displayError", object: nil)
+        
+
+        // ---------------
+        // Degrees/Radians
+        // ---------------
+        
+        // Degrees to Radians
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "degreesToRadians:", name: "degreesToRadians", object: nil)
+        
+        // Radians to Degrees
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "radiansToDegrees:", name: "radiansToDegrees", object: nil)
     }
 }
-

@@ -47,10 +47,12 @@ class Calculator {
     // Tracks when the equals button has just been pressed
     var equalsPressed: Bool = false
     
+    // Indicates if an error just occurred
+    var error: Bool = false
+    
     // Handle memory operations
     var memoryValue: Double = 0
-    
-    
+
     
     // Array used to keep track of calculations inside parentheses
     var parensCalculations: [Calculator] = []
@@ -163,6 +165,16 @@ class Calculator {
     
     // Press radians
     func pressRad() {
+        // Post notifications
+        if self.radians {
+            println("Radians to degrees")
+            NSNotificationCenter.defaultCenter().postNotificationName("radiansToDegrees", object: nil)
+        }
+        else {
+            println("Degrees to radians")
+            NSNotificationCenter.defaultCenter().postNotificationName("degreesToRadians", object: nil)
+        }
+        
         self.radians = !self.radians
     }
     
@@ -267,10 +279,10 @@ class Calculator {
             if value <= 0 { self.errorOut() }
             else { value = log10(value) }
         case "x!":
-            // Error if less than 0
-            if value < 0 { self.errorOut() }
-                // Force to integer, don't want to deal with factorials of fractions...
-            else { value = Double(factorial(Int(value))) }
+            // Error if less than 0 or if number is too large
+            if (value < 0) || (value > Double(INT64_MAX)) { self.errorOut() }
+                // Floor the value, don't want to deal with factorials of fractions...
+            else { value = factorial(floor(value)) }
         case "sin":
             value = self.radians ? sin(value) : sin(value * M_PI / 180)
         case "cos":
@@ -339,13 +351,15 @@ class Calculator {
         }
         
         // Post notification to display the appropriate value
-        if calc.unaryPreviousValue {
-            println("Displaying previous value")
-            NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
-        }
-        else {
-            println("Displaying current value")
-            NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
+        if !self.error {
+            if calc.unaryPreviousValue {
+                println("Displaying previous value")
+                NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
+            }
+            else {
+                println("Displaying current value")
+                NSNotificationCenter.defaultCenter().postNotificationName("displayCurrentValue", object: nil)
+            }
         }
     }
     
@@ -445,7 +459,9 @@ class Calculator {
         }
         
         // Post Notification to display the previous value
-        NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object: nil)
+        if !self.error {
+            NSNotificationCenter.defaultCenter().postNotificationName("displayPreviousValue", object:nil)
+        }
 
         
         return currentCalc.previousValue
@@ -589,13 +605,20 @@ class Calculator {
     
     // Reset calculator to initial values
     func reset() {
-        self.firstCalculation = true
-        self.fractions = false
-        self.fractionLevel = 0.1
-        self.exponential = false
         self.previousValue = 0
         self.currentValue = 0
         self.nextOperation = ""
+        
+        self.firstCalculation = true
+        self.unaryPreviousValue = false
+        self.exponential = false
+        self.exponentialValue = 0
+        self.fractions = false
+        self.fractionLevel = 0.1
+        self.equalsPressed = false
+        self.error = false
+        
+        self.orderOfOperations.removeAll(keepCapacity: false)
         self.parensCalculations.removeAll(keepCapacity: false)
         
         // Post Notification to display the current value
@@ -639,21 +662,51 @@ class Calculator {
     // Memory Clear
     func memoryClear() {
         self.memoryValue = 0
+        
+        // Post notification to display value in memory
+        NSNotificationCenter.defaultCenter().postNotificationName("displayMemoryValue", object: nil)
     }
     
     // Memory Add
     func memoryAdd() {
-        self.memoryValue += self.finishCalculation()
+        if self.equalsPressed {
+            self.memoryValue += self.previousValue
+        }
+        else {
+            self.memoryValue += self.finishCalculation()
+        }
+        self.currentValue = self.memoryValue
+
+        // Makes sure we know what to do the next time we run performNewCalculation()
+        self.firstCalculation = true
+        
+        // Post notification to display value in memory
+        NSNotificationCenter.defaultCenter().postNotificationName("displayMemoryValue", object: nil)
     }
     
     // Memory Subtract
     func memorySubtract() {
-        self.memoryValue -= self.finishCalculation()
+        if self.equalsPressed {
+            self.memoryValue -= self.previousValue
+        }
+        else {
+            self.memoryValue -= self.finishCalculation()
+        }
+        self.currentValue = self.memoryValue
+        
+        // Makes sure we know what to do the next time we run performNewCalculation()
+        self.firstCalculation = true
+        
+        // Post notification to display value in memory
+        NSNotificationCenter.defaultCenter().postNotificationName("displayMemoryValue", object: nil)
     }
     
     // Memory Recall
     func memoryRecall() {
         self.setCurrentValue(self.memoryValue)
+        
+        // Post notification to display value in memory
+        NSNotificationCenter.defaultCenter().postNotificationName("displayMemoryValue", object: nil)
     }
     
     
@@ -663,10 +716,9 @@ class Calculator {
     // Post Errors
     // -----------
     
-    // TODO: Add handling of calculationError notification
-    //       Disable all buttons until everything is cleared
-    
     func errorOut() {
+        println("Error!")
+        self.error = true
         NSNotificationCenter.defaultCenter().postNotificationName("displayError", object: nil)
     }
     
@@ -677,29 +729,33 @@ class Calculator {
     // ------------
     
     // Previous Value
-    func printPreviousValue(numChars: Int) -> String {
-        return self.printValue(self.previousValue, numChars: numChars)
+    func printPreviousValue() -> String {
+        return self.printValue(self.previousValue)
     }
     
-    func printValue(printValue: Double, numChars: Int) -> String {
+    func printMemoryValue() -> String {
+        return self.printValue(self.memoryValue)
+    }
+    
+    func printValue(printValue: Double) -> String {
         
         // Display value
         var value: String
         
         // Only display the integer unless we have a fraction portion
-        if (printValue % 1) > 0.0 {
+        //  or the number is larger than 10^16
+        if ((printValue % 1.0) > 0.0) || (printValue > pow(10.0, 16.0)) {
             value = "\(printValue)"
         }
         else {
-            value = "\(Int(printValue))"
+            value = "\(Int64(printValue))"
         }
         
-        return self.truncate(value, numChars: numChars)
-
+        return value
     }
     
     // Current Value
-    func printCurrentValue(numChars: Int) -> String {
+    func printCurrentValue() -> String {
         let calc = self.retrieveLowestLevelCalc()
         
         // Determine whether we should display a decimal point
@@ -712,15 +768,16 @@ class Calculator {
         
         
         // Only display the integer unless we have a fraction portion
-        if (calc.currentValue % 1) > 0.0 {
+        //  or the number is larger than 10^16
+        if ((calc.currentValue % 1) > 0.0) || (calc.currentValue > pow(10.0, 16.0)) {
             value = "\(calc.currentValue)"
         }
         else {
-            value = "\(Int(calc.currentValue))\(decimalPoint)"
+            value = "\(Int64(calc.currentValue))\(decimalPoint)"
         }
         
         
-        // If using exponential notation, print it out with it
+        // If using exponential notation, format exponential notation
         if self.exponential {
             // Do some special magic for truncating exponential values
             return "\(value) E \(self.exponentialValue)"
@@ -728,16 +785,7 @@ class Calculator {
         // Otherwise, just print the value
         else {
             // Only display the integer unless we have a fraction portion
-            return self.truncate(value, numChars: numChars)
+            return value
         }
-    }
-    
-    // Truncate output strings to fit label
-    func truncate(value: String, numChars: Int) -> String {
-        // Determine if we're dealing with an integer
-//        if contains(value, ".") && value[value.startIndex...value.] {
-        
-//        }
-        return value
     }
 }
