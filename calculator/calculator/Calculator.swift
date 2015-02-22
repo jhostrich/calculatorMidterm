@@ -325,7 +325,7 @@ class Calculator {
             value = self.radians ? asinh(value) : asinh(value * M_PI / 180)
         case "cosh^-1":
             // Error out if the value is less than 1
-            if value < 1 { self.errorOut() }
+            if value <= 1 { self.errorOut() }
             else { value = self.radians ? acosh(value) : acosh(value * M_PI / 180) }
         case "tanh^-1":
             // Error out if the vaue is outside of the non-inclusive range (-1,1)

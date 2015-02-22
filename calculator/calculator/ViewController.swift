@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     // --------------
     
     @IBOutlet weak var displayLabel: UILabel!
-    
+    @IBOutlet weak var radLabel: UILabel!
     
     // ------------------------
     // Basic Calculator Buttons
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var eeButton: UIButton!
     // Fifth Row
     @IBOutlet weak var radButton: UIButton!
-    @IBOutlet weak var sinhCode: UIButton!
+    @IBOutlet weak var sinhButton: CalculatorButton!
     @IBOutlet weak var coshButton: UIButton!
     @IBOutlet weak var tanhButton: UIButton!
     @IBOutlet weak var πButton: UIButton!
@@ -90,6 +90,10 @@ class ViewController: UIViewController {
     // ----------
     
     var calc = Calculator()
+    
+    
+    // Indicates if we're viewing secondary buttons
+    var secondary: Bool = false
     
     // -----------------------------------------------------------
 
@@ -159,7 +163,7 @@ class ViewController: UIViewController {
         self.eeButton.addTarget           (self, action: "pressEeButton",           forControlEvents: .TouchUpInside)
         self.radButton.addTarget          (self, action: "pressRadButton",          forControlEvents: .TouchUpInside)
         // Fifth Row
-        self.sinhCode.addTarget           (self, action: "pressSinhCode",           forControlEvents: .TouchUpInside)
+        self.sinhButton.addTarget           (self, action: "presssinhButton",           forControlEvents: .TouchUpInside)
         self.coshButton.addTarget         (self, action: "pressCoshButton",         forControlEvents: .TouchUpInside)
         self.tanhButton.addTarget         (self, action: "pressTanhButton",         forControlEvents: .TouchUpInside)
         self.πButton.addTarget            (self, action: "pressπButton",            forControlEvents: .TouchUpInside)
@@ -196,7 +200,7 @@ class ViewController: UIViewController {
     // -----------------------------
     // Scientific Calculator Buttons
     // -----------------------------
-    
+
     // First Row
     func pressOpenParensButton()   { Calculator.shared.openParens()     }
     func pressCloseParensButton()  { Calculator.shared.closeParens()    }
@@ -206,7 +210,6 @@ class ViewController: UIViewController {
     func pressMRecallButton()      { Calculator.shared.memoryRecall()   }
     
     // Second Row
-    func pressSecondButton() {  }    
     func pressXSquaredButton()     { Calculator.shared.performUnaryOperation("x^2")  }
     func pressXCubedButton()       { Calculator.shared.performUnaryOperation("x^3")  }
     func pressXToTheYButton()      { Calculator.shared.performNewCalculation("x^y")  }
@@ -231,12 +234,146 @@ class ViewController: UIViewController {
     func pressRadButton()          { Calculator.shared.pressRad() }
     
     // Fifth Row
-    func pressSinhCode()           { Calculator.shared.performUnaryOperation("sinh") }
+    func presssinhButton()         { Calculator.shared.performUnaryOperation("sinh") }
     func pressCoshButton()         { Calculator.shared.performUnaryOperation("cosh") }
     func pressTanhButton()         { Calculator.shared.performUnaryOperation("tanh") }
     func pressπButton()            { Calculator.shared.performUnaryOperation("π")    }
     func pressRandButton()         { Calculator.shared.performUnaryOperation("rand") }
     
+    
+    // -----------------
+    // Secondary Buttons
+    // -----------------
+    func pressYToTheXButton()      { Calculator.shared.performNewCalculation("y^x")     }
+    func pressTwoToTheXButton()    { Calculator.shared.performUnaryOperation("2^x")     }
+    func pressLogYButton()         { Calculator.shared.performNewCalculation("logy")    }
+    func pressLog2Button()         { Calculator.shared.performUnaryOperation("log2")    }
+    func pressArcsin()             { Calculator.shared.performUnaryOperation("sin^-1")  }
+    func PressArcosButton()        { Calculator.shared.performUnaryOperation("cos^-1")  }
+    func pressArctanButton()       { Calculator.shared.performUnaryOperation("tan^-1")  }
+    func pressArcsinhButton()      { Calculator.shared.performUnaryOperation("sinh^-1") }
+    func pressArcoshButton()       { Calculator.shared.performUnaryOperation("cosh^-1") }
+    func pressArctanhButton()      { Calculator.shared.performUnaryOperation("tanh^-1") }
+    
+    
+    // -----------------------------------------------------------
+    
+    // -----------------
+    // Secondary Buttons
+    // -----------------
+    
+    func pressSecondButton() {
+        // Switch to secondary buttons
+        if !self.secondary {
+            // Convert e^x to  y^x
+            self.eToTheXButton.setTitle("yˣ", forState: .Normal)
+            self.eToTheXButton.removeTarget(self, action: "pressEToTheXButton", forControlEvents: .TouchUpInside)
+            self.eToTheXButton.addTarget(self, action: "pressYToTheXButton",      forControlEvents: .TouchUpInside)
+            
+            
+            // Convert 10^x to 2^x
+            self.tenToTheXButton.setTitle("2ˣ", forState: .Normal)
+            self.tenToTheXButton.removeTarget(self, action: "pressTenToTheXButton", forControlEvents: .TouchUpInside)
+            self.tenToTheXButton.addTarget(self, action: "pressTwoToTheXButton", forControlEvents: .TouchUpInside)
+            
+            // Convert ln to logy
+            // It shows an alien instead of a y, but that's pretty cool, eh?
+            self.lnButton.setTitle("log𝑦", forState: .Normal)
+            self.lnButton.removeTarget(self, action: "pressLnButton",   forControlEvents: .TouchUpInside)
+            self.lnButton.addTarget   (self, action: "pressLogYButton", forControlEvents: .TouchUpInside)
+            
+            // Convert log10 to log2
+            self.log10Button.setTitle("log₂", forState: .Normal)
+            self.log10Button.removeTarget(self, action: "pressLog10Button", forControlEvents: .TouchUpInside)
+            self.log10Button.addTarget   (self, action: "pressLog2Button",  forControlEvents: .TouchUpInside)
+            
+            // Convert sin to sin^-1
+            self.sinButton.setTitle("sin⁻¹", forState: .Normal)
+            self.sinButton.removeTarget(self, action: "pressSinButton", forControlEvents: .TouchUpInside)
+            self.sinButton.addTarget   (self, action: "pressArcsin",    forControlEvents: .TouchUpInside)
+            
+            // Convert cos to cos^-1
+            self.cosButton.setTitle("cos⁻¹", forState: .Normal)
+            self.cosButton.removeTarget(self, action: "pressCosButton",   forControlEvents: .TouchUpInside)
+            self.cosButton.addTarget   (self, action: "PressArcosButton", forControlEvents: .TouchUpInside)
+            
+            // Convert tan to tan^-1
+            self.tanButton.setTitle("tan⁻¹", forState: .Normal)
+            self.tanButton.removeTarget(self, action: "pressTanButton",    forControlEvents: .TouchUpInside)
+            self.tanButton.addTarget   (self, action: "pressArctanButton", forControlEvents: .TouchUpInside)
+            
+            // Convert sinh to sinh^-1
+            self.sinhButton.setTitle("sinh⁻¹", forState: .Normal)
+            self.sinhButton.removeTarget(self, action: "pressSinhButton",    forControlEvents: .TouchUpInside)
+            self.sinhButton.addTarget   (self, action: "pressArcsinhButton", forControlEvents: .TouchUpInside)
+            
+            // Convert cosh to cosh^-1
+            self.coshButton.setTitle("cosh⁻¹", forState: .Normal)
+            self.coshButton.removeTarget(self, action: "pressCoshButton",   forControlEvents: .TouchUpInside)
+            self.coshButton.addTarget   (self, action: "pressArcoshButton", forControlEvents: .TouchUpInside)
+            
+            // Convert tanh to tanh^-1
+            self.tanhButton.setTitle("tanh⁻¹", forState: .Normal)
+            self.tanhButton.removeTarget(self, action: "pressTanhButton",    forControlEvents: .TouchUpInside)
+            self.tanhButton.addTarget   (self, action: "pressArctanhButton", forControlEvents: .TouchUpInside)
+
+        }
+        // Switch back to original buttons
+        else {
+            // Convert back to e^x
+            self.eToTheXButton.setTitle("eˣ", forState: .Normal)
+            self.eToTheXButton.addTarget   (self, action: "pressEToTheXButton", forControlEvents: .TouchUpInside)
+            self.eToTheXButton.removeTarget(self, action: "pressYToTheXButton", forControlEvents: .TouchUpInside)
+            
+            
+            // Convert back to 10^x
+            self.tenToTheXButton.setTitle("10ˣ", forState: .Normal)
+            self.tenToTheXButton.addTarget   (self, action: "pressTenToTheXButton", forControlEvents: .TouchUpInside)
+            self.tenToTheXButton.removeTarget(self, action: "pressTwoToTheXButton", forControlEvents: .TouchUpInside)
+            
+            // Convert back to ln
+            self.lnButton.setTitle("ln", forState: .Normal)
+            self.lnButton.addTarget   (self, action: "pressLnButton",   forControlEvents: .TouchUpInside)
+            self.lnButton.removeTarget(self, action: "pressLogYButton", forControlEvents: .TouchUpInside)
+            
+            // Convert back to log10
+            self.log10Button.setTitle("log₁₀", forState: .Normal)
+            self.log10Button.addTarget   (self, action: "pressLog10Button", forControlEvents: .TouchUpInside)
+            self.log10Button.removeTarget(self, action: "pressLog2Button",  forControlEvents: .TouchUpInside)
+            
+            // Convert back to sin
+            self.sinButton.setTitle("sin", forState: .Normal)
+            self.sinButton.addTarget   (self, action: "pressSinButton", forControlEvents: .TouchUpInside)
+            self.sinButton.removeTarget(self, action: "pressArcsin",    forControlEvents: .TouchUpInside)
+            
+            // Convert back to cos
+            self.cosButton.setTitle("cos", forState: .Normal)
+            self.cosButton.addTarget   (self, action: "pressCosButton",   forControlEvents: .TouchUpInside)
+            self.cosButton.removeTarget(self, action: "PressArcosButton", forControlEvents: .TouchUpInside)
+            
+            // Convert back to tan
+            self.tanButton.setTitle("tan", forState: .Normal)
+            self.tanButton.addTarget   (self, action: "pressTanButton",    forControlEvents: .TouchUpInside)
+            self.tanButton.removeTarget(self, action: "pressArctanButton", forControlEvents: .TouchUpInside)
+            
+            // Convert back to sinh
+            self.sinhButton.setTitle("sinh", forState: .Normal)
+            self.sinhButton.addTarget   (self, action: "pressSinhButton",    forControlEvents: .TouchUpInside)
+            self.sinhButton.removeTarget(self, action: "pressArcsinhButton", forControlEvents: .TouchUpInside)
+            
+            // Convert back to cosh
+            self.coshButton.setTitle("cosh", forState: .Normal)
+            self.coshButton.addTarget   (self, action: "pressCoshButton",   forControlEvents: .TouchUpInside)
+            self.coshButton.removeTarget(self, action: "pressArcoshButton", forControlEvents: .TouchUpInside)
+            
+            // Convert back to tanh
+            self.tanhButton.setTitle("tanh", forState: .Normal)
+            self.tanhButton.addTarget   (self, action: "pressTanhButton",    forControlEvents: .TouchUpInside)
+            self.tanhButton.removeTarget(self, action: "pressArctanhButton", forControlEvents: .TouchUpInside)
+        }
+        
+        self.secondary = !self.secondary
+    }
     
     // -----------------------------------------------------------
     
@@ -282,10 +419,16 @@ class ViewController: UIViewController {
     
     func degreesToRadians(notification: NSNotification) {
         self.radButton.setTitle("Deg", forState: .Normal)
+        
+        // Unhide radLabel
+        self.radLabel.hidden = false
     }
     
     func radiansToDegrees(notification: NSNotification) {
         self.radButton.setTitle("Rad", forState: .Normal)
+        
+        // Hide radLabel
+        self.radLabel.hidden = true
     }
     
     // -----------------------------------------------------------
@@ -295,6 +438,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.initializeButtonFunctionality()
+        
+        // Initialize radLabel to hidden
+        self.radLabel.hidden = true
         
         
         // -----------------------
