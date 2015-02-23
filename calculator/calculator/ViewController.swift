@@ -84,22 +84,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var πButton: UIButton!
     @IBOutlet weak var randButton: UIButton!
 
-    
-    // ----------
-    // Calculator
-    // ----------
-    
-    var calc = Calculator()
-    
-    
+
     // Indicates if we're viewing secondary buttons
     var secondary: Bool = false
     
     // -----------------------------------------------------------
 
-    // --------------
-    // Adam's Changes
-    // --------------
     
     func initializeButtonFunctionality() {
         // ------------------------
